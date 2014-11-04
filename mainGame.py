@@ -17,17 +17,6 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('飞机大战')
 
-# 载入游戏音乐
-bullet_sound = pygame.mixer.Sound('resources/sound/bullet.wav')
-enemy1_down_sound = pygame.mixer.Sound('resources/sound/enemy1_down.wav')
-game_over_sound = pygame.mixer.Sound('resources/sound/game_over.wav')
-bullet_sound.set_volume(0.3)
-enemy1_down_sound.set_volume(0.3)
-game_over_sound.set_volume(0.3)
-pygame.mixer.music.load('resources/sound/game_music.wav')
-pygame.mixer.music.play(-1, 0.0)
-pygame.mixer.music.set_volume(0.25)
-
 # 载入背景图
 background = pygame.image.load('resources/image/background.png').convert()
 game_over = pygame.image.load('resources/image/gameover.png')
@@ -82,7 +71,6 @@ while running:
     # 控制发射子弹频率,并发射子弹
     if not player.is_hit:
         if shoot_frequency % 15 == 0:
-            bullet_sound.play()
             player.shoot(bullet_img)
         shoot_frequency += 1
         if shoot_frequency >= 15:
@@ -111,7 +99,6 @@ while running:
             enemies_down.add(enemy)
             enemies1.remove(enemy)
             player.is_hit = True
-            game_over_sound.play()
             break
         if enemy.rect.top < 0:
             enemies1.remove(enemy)
@@ -140,7 +127,7 @@ while running:
     # 绘制击毁动画
     for enemy_down in enemies_down:
         if enemy_down.down_index == 0:
-            enemy1_down_sound.play()
+            pass
         if enemy_down.down_index > 7:
             enemies_down.remove(enemy_down)
             score += 1000
